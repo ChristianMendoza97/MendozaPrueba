@@ -27,15 +27,23 @@ class _SearchTripsPageState extends State<SearchTripsPage> {
       home: Scaffold(
         extendBodyBehindAppBar: true, // Permitir que el cuerpo se extienda detrás de la AppBar
         appBar: AppBar(
-          backgroundColor: Colors.transparent, // Fondo transparente
+          title: const Text(
+            'SEARCH',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 24,
+              color: Colors.white,
+            ),
+          ),
+          backgroundColor: Colors.transparent,
           elevation: 0,
-          systemOverlayStyle: SystemUiOverlayStyle.light, // Hacer que el contenido del sistema (hora, batería) sea visible
+          systemOverlayStyle: SystemUiOverlayStyle.light, // Hacer que el contenido del sistema sea visible
         ),
         body: Stack(
           children: [
-            // Degradado de fondo
+            // Fondo degradado global
             Container(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 gradient: LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
@@ -46,7 +54,7 @@ class _SearchTripsPageState extends State<SearchTripsPage> {
             // Contenido principal
             Column(
               children: [
-                SizedBox(height: 100), // Espacio debajo de la barra superior
+                const SizedBox(height: 120), // Espacio debajo de la AppBar
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20.0),
                   child: Column(
@@ -55,22 +63,26 @@ class _SearchTripsPageState extends State<SearchTripsPage> {
                       Container(
                         decoration: BoxDecoration(
                           color: Colors.white,
-                          borderRadius: BorderRadius.circular(10.0),
+                          borderRadius: BorderRadius.circular(30.0),
                         ),
                         child: TextField(
                           controller: _searchController,
-                          style: TextStyle(color: Colors.black),
+                          style: const TextStyle(color: Colors.black),
                           inputFormatters: [
                             FilteringTextInputFormatter.allow(RegExp("[a-zA-Z\s]")),
                           ],
                           decoration: InputDecoration(
-                            hintText: 'Knuckles Mountain Range',
-                            hintStyle: TextStyle(color: Colors.black45),
+                            hintText: 'Christian Mendoza',
+                            hintStyle: const TextStyle(color: Colors.black45),
                             border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10.0),
+                              borderRadius: BorderRadius.circular(30.0),
+                              borderSide: BorderSide.none,
                             ),
+                            filled: true,
+                            fillColor: Colors.white,
+                            contentPadding: const EdgeInsets.symmetric(horizontal: 20.0),
                             suffixIcon: IconButton(
-                              icon: Icon(Icons.search),
+                              icon: const Icon(Icons.search),
                               onPressed: () {
                                 setState(() {
                                   _searchText = _searchController.text;
@@ -82,7 +94,7 @@ class _SearchTripsPageState extends State<SearchTripsPage> {
 
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
-                                    content: Text('Nombre: $_nombre, Apellido: $_apellido'),
+                                    content: Text('Nombre: $_nombre $_apellido'),
                                   ),
                                 );
                               },
@@ -95,45 +107,53 @@ class _SearchTripsPageState extends State<SearchTripsPage> {
                           },
                         ),
                       ),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                     ],
                   ),
                 ),
-                // Mapa o imagen (se agregará más tarde)
+                // Cuadro con degradado en lugar de imagen
                 Expanded(
-                  child: Container(
-                    width: double.infinity,
-                    margin: EdgeInsets.all(20),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: Colors.white,
-                    ),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(20),
-                      child: Center(
-                        child: Text(
-                          'Mapa o imagen aquí', // Reemplazar por la imagen real
-                          style: TextStyle(color: Colors.black54),
+                  child: Stack(
+                    children: [
+                      Container(
+                        width: double.infinity,
+                        margin: const EdgeInsets.all(20),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(30),
+                          gradient: const LinearGradient(
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                            colors: [Color(0xFF87CEEB), Color(0xFFB0E0E6)],
+                          ),
+                        ),
+                        child: const Center(
+                          child: Text(
+                            'Mapa o imagen aquí',
+                            style: TextStyle(
+                              color: Colors.black45,
+                              fontSize: 16,
+                            ),
+                          ),
                         ),
                       ),
-                    ),
+                      // Botones redondos alineados en la parte inferior de la imagen
+                      Positioned(
+                        right: 20,
+                        bottom: 20,
+                        child: Column(
+                          children: [
+                            _buildRoundButton(Icons.map, '3D'),
+                            const SizedBox(height: 20),
+                            _buildRoundButton(Icons.navigation, '2D'),
+                            const SizedBox(height: 20),
+                            _buildRoundButton(Icons.gps_fixed, 'Location'),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],
-            ),
-            // Botones redondos alineados a la derecha
-            Positioned(
-              right: 20,
-              top: 150,
-              child: Column(
-                children: [
-                  _buildRoundButton(Icons.map, '3D'),
-                  SizedBox(height: 10),
-                  _buildRoundButton(Icons.navigation, '2D'),
-                  SizedBox(height: 10),
-                  _buildRoundButton(Icons.gps_fixed, 'Location'),
-                ],
-              ),
             ),
           ],
         ),
@@ -146,7 +166,7 @@ class _SearchTripsPageState extends State<SearchTripsPage> {
     return Tooltip(
       message: tooltip,
       child: CircleAvatar(
-        radius: 30,
+        radius: 25, // Tamaño del botón
         backgroundColor: Colors.white,
         child: Icon(icon, color: Colors.black),
       ),
