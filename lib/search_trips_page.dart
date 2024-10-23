@@ -82,7 +82,7 @@ class _SearchTripsPageState extends State<SearchTripsPage> {
 
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
-                                    content: Text('Nombre: $_nombre, Apellido: $_apellido'),
+                                    content: Text('Nombre: $_nombre $_apellido'),
                                   ),
                                 );
                               },
@@ -115,20 +115,17 @@ class _SearchTripsPageState extends State<SearchTripsPage> {
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(20),
                       child: Center(
-                        child: Text(
-                          'Mapa o imagen aquí', // Reemplazar por la imagen real
-                          style: TextStyle(color: Colors.black54),
-                        ),
+                        child: Container(), // Contenedor vacío en lugar del texto
                       ),
                     ),
                   ),
                 ),
               ],
             ),
-            // Botones redondos alineados a la derecha
+            // Botones redondos alineados a la derecha dentro del degradado
             Positioned(
               right: 20,
-              top: 150,
+              top: 200, // Ajusta la posición para que esté dentro del área del degradado
               child: Column(
                 children: [
                   _buildRoundButton(Icons.map, '3D'),
@@ -150,9 +147,9 @@ class _SearchTripsPageState extends State<SearchTripsPage> {
     return Tooltip(
       message: tooltip,
       child: CircleAvatar(
-        radius: 30,
+        radius: 20, // Tamaño más pequeño para el botón
         backgroundColor: Colors.white,
-        child: Icon(icon, color: Colors.black),
+        child: Icon(icon, color: Colors.black, size: 18), // Icono más pequeño
       ),
     );
   }
