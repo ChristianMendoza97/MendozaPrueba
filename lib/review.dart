@@ -1,20 +1,22 @@
+// review.dart
+
 import 'package:flutter/material.dart';
 
 class Review extends StatelessWidget {
-  const Review(
-      {super.key,
-      required this.pathImage,
-      required this.name,
-      required this.information,
-      required this.comment});
+  const Review({
+    super.key,
+    required this.pathImage,
+    required this.name,
+    required this.information,
+    required this.comment,
+    required this.stars, // Se agrega el parámetro para las estrellas
+  });
 
   final String pathImage;
-
   final String name;
-
   final String information;
-
   final String comment;
+  final Row stars; // Se agrega esta propiedad para las estrellas
 
   @override
   Widget build(BuildContext context) {
@@ -49,33 +51,35 @@ class Review extends StatelessWidget {
       ),
     );
 
-    final userInformation = Container(
-      margin: const EdgeInsets.only(
-        left: 20,
-      ),
-      child: Text(
-        information,
-        textAlign: TextAlign.left,
-        style: const TextStyle(
-          fontFamily: 'Lato',
-          fontWeight: FontWeight.bold,
-          fontSize: 11,
-          color: Color(0xff939598),
+    // Información y estrellas se colocan en una fila
+    final userInformationAndStars = Row(
+      children: [
+        Container(
+          margin: const EdgeInsets.only(left: 20),
+          child: Text(
+            information,
+            textAlign: TextAlign.left,
+            style: const TextStyle(
+              fontFamily: 'Lato',
+              fontWeight: FontWeight.bold,
+              fontSize: 11,
+              color: Color(0xff939598),
+            ),
+          ),
         ),
-      ),
+        const SizedBox(width: 10), // Espacio entre información y estrellas
+        stars, // Se agregan las estrellas al lado de la información
+      ],
     );
 
     final userComment = Container(
-      margin: const EdgeInsets.only(
-        left: 20,
-      ),
+      margin: const EdgeInsets.only(left: 20),
       child: Text(
         comment,
         textAlign: TextAlign.left,
         style: const TextStyle(
           fontFamily: 'Lato',
           fontSize: 11,
-          // fontWeight: FontWeight.bold,
           color: Color(0xff231F20),
         ),
       ),
@@ -85,7 +89,7 @@ class Review extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         userName,
-        userInformation,
+        userInformationAndStars, // Se coloca la información y estrellas juntas
         userComment,
       ],
     );
